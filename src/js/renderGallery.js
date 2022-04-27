@@ -1,16 +1,17 @@
 const galleryRef = document.querySelector('.gallery');
 
 export function renderGallery(pictures) {
-  galleryRef.innerHTML = '';
-
+ 
   const markup = pictures
     .map(
       ({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
       
-      <a href="${largeImageURL}" class ="gallery__link">
+      <a href="${largeImageURL}" class = "gallery__link">
       <div class="photo-card">
-           <img class = "gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy"/> 
-             <div class="info">
+      
+      <img class = "gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy"/>    
+     
+      <div class="info">
           <p class="info-item">
             <b>Likes ${likes} </b>
           </p>
@@ -24,10 +25,11 @@ export function renderGallery(pictures) {
             <b>Downloads ${downloads}</b>
           </p>
           </div>
-          </div>
-          </a>
+                 </div>
+                 </a>
               `,
     )
     .join('');
   galleryRef.insertAdjacentHTML('beforeend', markup);
+ 
 }
