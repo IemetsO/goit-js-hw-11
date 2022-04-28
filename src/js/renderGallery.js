@@ -1,5 +1,5 @@
 const galleryRef = document.querySelector('.gallery');
-
+const loadButton = document.querySelector('.load-more');
 export function renderGallery(pictures) {
  
   const markup = pictures
@@ -31,5 +31,5 @@ export function renderGallery(pictures) {
     )
     .join('');
   galleryRef.insertAdjacentHTML('beforeend', markup);
- 
+  loadButton.classList.remove('is-hiden')
 }

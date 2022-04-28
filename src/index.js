@@ -16,32 +16,41 @@ let page = 1;
 loadButton.classList.add('is-hiden');
 
 inputRef.addEventListener('submit', e => {
+    if(!loadButton.classList.contains("is-hiden")){
+        loadButton.classList.add('is-hiden')  
+    }
   e.preventDefault();
+  page = 1;
   galleryRef.innerHTML = '';
-  const searcEl = inputRef.firstElementChild.value;
+  const searcEl = inputRef.firstElementChild.value.trim();
   if (!searcEl) {
     return;
   } else {
+     
     fetchPictures(searcEl)
       .then(data => {
-        if (data.totalHits === 0) {
-          Notiflix.Notify.failure(
-            'Sorry, there are no images matching your search query. Please try again',
-          );
-        } else {
+        if (data.hits.length === 0){
+            Notiflix.Notify.failure(
+                'Sorry, something went wrong. Please try again later');
+                return
+        } else{
           Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images`);
           renderGallery(data.hits);
+          console.log(data.hits)
           page += 1;
           var lightbox = new SimpleLightbox (".gallery a");
           lightbox;
+         
         }
       })
       .catch(error => {
-        console.log(error);
+        console.log(error)
+        Notiflix.Notify.failure(
+            'Sorry, something went wrong. Please try again later');
       });
   }
  
-  loadButton.classList.remove('is-hiden');
+
   
 });
 
@@ -75,7 +84,7 @@ axios.defaults.baseURL = 'https://pixabay.com/api';
 
 const fetchPictures = async searcEl => {
   const response = await axios.get(
-    `/?key=26992012-e6a459b4fdd9a0e95b25f973a&q=${searcEl}&image_type=photo&per_page=40&page=${page}&orientation=horizontal&safesearch=true&fields=webformatURL,largeImageURL,tags,likes,views,comments,downloads`,
+    `/?key=26831339-bc8163cbccdc63c88a94ebcc2&q=${searcEl}&image_type=photo&per_page=40&page=${page}&orientation=horizontal&safesearch=true&fields=webformatURL,largeImageURL,tags,likes,views,comments,downloads`,
   );
   return response.data;
 };
